@@ -1,0 +1,692 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.logo{
+    width: 100px;
+}
+.otra a{
+    text-decoration: none;
+    color: #000;
+    padding-left: 3em;
+    font-weight: bold;
+}
+nav{
+    background: #ffffff;
+    border: 1px #8b8b8b solid;
+    position: fixed;
+}
+@font-face {
+    font-family: "Nunito";
+    src: url(../css/Nunito_Sans/NunitoSans-Regular.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f900;
+    padding-left: 15em;
+    margin-right: 7000px;
+    min-width: 190px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 0.5em;
+
+  }
+  
+  .submenu a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+  }
+  .nombre-usuario {
+    margin-right: 5px; /* Espacio entre el nombre de usuario y el icono */
+    color: #000;
+}
+  
+  .otra:hover .submenu {
+    display: block;
+  }
+  .otra {
+    display: inline-block;
+    width: 12%;
+    margin-left: 900px; 
+  }
+
+  .otra a:hover{
+    color: blue;
+}
+
+  .otra:hover .submenu{
+    display: block;
+    background: #ffffff;
+    color: #000;
+    margin-right: 10000px;
+    width: 20px; 
+    box-shadow: 0px 8px 8px 0px  rgba(0, 0, 0, 0.2);
+    margin-top: 5px;
+    border-top:solid #c4c0c0;
+    
+    
+}
+.search-bar {
+    width: 15%;
+    border-left: 4px solid #FA5ED2;
+    position: absolute; /* Cambiado de 'fixed' a 'absolute' */
+    right: 80px; /* Ajusta este valor según la posición que desees */
+    top: 210px; /* Ajusta este valor según la posición que desees */
+}
+
+.btn-outline{
+    background-color: rgb(226, 216, 216);
+    border: 1px solid #ccc;
+    border-radius: 0; /* Elimina la redondez */
+}
+.form-select{
+    width: 30%;
+}
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 0; /* Elimina la redondez */
+}
+
+.input-group {
+    position: relative;
+}
+
+.form-control input[type="text"] {
+    border: none; /* Elimina el borde del campo de texto */
+    padding-right: 5px; /* Espacio para el ícono de búsqueda */
+}
+
+.input-group-append {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px; /* Espacio entre el ícono y el borde derecho del campo de texto */
+}
+.link {
+    display: flex; /* Usa flexbox para alinear los elementos en una línea */
+    align-items: center; /* Centra verticalmente los elementos */
+    text-decoration: none; /* Elimina la decoración de enlace */
+    color: #000; /* Color del texto */
+    padding-right: 1em;
+}
+
+.nombre-usuario {
+    margin-right: 5px; /* Espacio entre el nombre de usuario y el icono */
+}
+/* Estilo inicial */
+.nav-item a {
+    text-decoration: none; /* Quitar subrayado de enlace */
+    color: #333; /* Color de texto predeterminado */
+}
+
+/* Estilo al hacer hover */
+.nav-item a:hover {
+    background-color: #f0f0f0; /* Color de fondo al hacer hover */
+    color: #007bff; /* Color de texto al hacer hover */
+}
+.card-footer {
+    background-color: #f5e7e79d;
+    border: 1px #8b8b8b9d solid;
+    height: 40px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    line-height: 40px; /* Igualar la altura del elemento */
+    width: 100%;
+}
+.conta{
+    padding-top: 2em;
+}
+/* En tu archivo de estilos CSS o en un bloque de estilos en tu HTML */
+
+.uno{
+    color: #ffffff;
+}
+h3{
+    text-align: center;
+    padding-top: 20px;
+    font-weight: bold;
+}
+/* En tu archivo de estilos CSS o en un bloque de estilos en tu HTML */
+.btn-custom {
+    background-color: #F13678; 
+    color: white; 
+    
+}
+/* En tu archivo de estilos CSS o en un bloque de estilos en tu HTML */
+.btn1 {
+    background-color: #F13678; 
+    color: white; 
+    height: 400px;
+    border: none;
+    text-align: center;
+    border-radius: 0; 
+    margin-left: 100px;
+    bottom: 0;
+    line-height: 40px; /* Igualar la altura del elemento */
+    width: 400px;
+    
+}
+
+.registro a {
+    background-color: #F13678;
+    color: white;
+    height: 40px; /* Aumenta la altura para hacerlo más grande */
+    text-decoration: none;
+    border: none;
+   
+    text-align: center;
+    border-radius: 0;
+    margin-left: 400px; /* Cambia de 7em a "auto" para alinear a la derecha */
+    bottom: 0;
+    line-height: 35px; /* Ajusta la altura para centrar verticalmente */
+    /* Cambia de 50% a "auto" para que el ancho sea el contenido */
+    display: block; /* Para que el enlace ocupe todo el ancho disponible */
+}
+.registro {
+    width: 140px;
+    height: 40px;
+    bottom: 0;
+    text-align: right; /* Alinea el contenido a la derecha */
+}
+.regpag{
+    font-family: "Nunito";
+    src: url(../css/Nunito_Sans/NunitoSans-Regular.ttf);
+    font-style: normal;
+    font-weight: bold;
+    margin-left: 50px;
+}
+.reporte a {
+    background-color: #F13678;
+    color: white;
+    height: 40px; /* Aumenta la altura para hacerlo más grande */
+    text-decoration: none;
+    border: none;
+    text-align: center;
+    border-radius: 0;
+    margin-left: 150px; /* Cambia de 7em a "auto" para alinear a la derecha */
+    bottom: 0;
+    line-height: 35px; /* Ajusta la altura para centrar verticalmente */
+    /* Cambia de 50% a "auto" para que el ancho sea el contenido */
+    display: block; /* Para que el enlace ocupe todo el ancho disponible */
+}
+.reporte {
+    width: 100px;
+    height: 40px;
+    bottom: 0;
+    text-align: right; /* Alinea el contenido a la derecha */
+}
+.form-select{
+    width: 30%;
+    margin-left: 50px;
+}
+.perPageSelect{
+    margin-left: 30px;
+}
+
+.ola{
+    display: flex;
+    justify-content: space-between;
+    width: 75em;
+}
+
+
+/* En tu archivo de estilos CSS o en un bloque de estilos en tu HTML */
+#pagination {
+    margin-top: 10px; /* Espacio entre la tabla y la paginación */
+}
+
+#page-counter {
+    margin-left: 10px; /* Espacio entre los botones y el contador */
+    font-size: 14px;
+}
+
+/* #menu{
+    border: solid 0.4em white;
+    border-bottom: 3px solid;
+    border-bottom-color:#FA5ED2;
+} */
+#divisor{
+    height: 15px;
+    border: solid 0.4em white;
+    border-left-color: #000;
+}
+/* Estilo para el contenedor de la tabla de DataTable */
+#desayunos_frios_wrapper {
+    margin-top: 20px;
+}
+
+/* Estilo para la tabla principal de DataTable */
+#desayunos_frios {
+    width: 100%; /* Asegúrate de que la tabla ocupe el ancho completo */
+}
+
+/* Estilo para la paginación */
+#desayunos_frios_paginate {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Estilo para el pie de tabla */
+#desayunos_frios_info {
+    margin-top: 10px;
+    text-align: center;
+}
+h1{
+    font-family: Arial;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 50px;
+}
+#titulo{
+    margin-top: 50px;
+}
+#contenedor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+  height: 70vh;
+ 
+}
+#login{
+  width: 400px
+}
+#cont{
+  background-color: rgba(255, 255, 255, 0.742);
+}
+.modal-login {		
+    color: #636363;
+}
+.modal-login .modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+}
+.modal-login .modal-header {
+    border-bottom: none;   
+    position: relative;
+    justify-content: center;
+}
+.modal-login h4 {
+    text-align: center;
+    font-size: 26px;
+    margin: 30px 0 -15px;
+}
+.modal-login .form-control:focus {
+    border-color: #6bd756;
+}
+.modal-login .form-control, .modal-login .btn {
+    min-height: 40px;
+    border-radius: 3px; 
+}
+.modal-login .close {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}	
+.modal-login .modal-footer {
+    background: #ecf0f1;
+    border-color: #dee4e7;
+    text-align: center;
+    justify-content: center;
+    margin: 0 -20px -20px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+.modal-login .modal-footer a {
+    color: #999;
+}		
+.modal-login .avatar img {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: -70px;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    z-index: 9;
+    background: #65d82c;
+    padding: 3px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+/* .modal-login .avatar img {
+    width: 100%;
+} */
+.modal-login.modal-dialog {
+    margin-top: 80px;
+}
+.modal-login .btn, .modal-login .btn:active {
+    color: #fff;
+    border-radius: 4px;
+    background: #65d82c !important;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    border: none;
+}
+.modal-login .btn:hover, .modal-login .btn:focus {
+    background: #54e70b !important;
+    outline: none;
+}
+.trigger-btn {
+    display: inline-block;
+    margin: 100px auto;
+}
+
+#alerta{
+    width: auto;
+}
+#cont{
+    background-color: #fffffe64;
+}
+
+.logo-img {
+    max-height: 50px; 
+    max-width: 100%; 
+  }
+  #foto_user{
+      max-height: 50px; 
+      max-width: 80px; 
+      border-radius: 40%
+      
+    }
+
+  label{
+    font-family:Arial;
+    font-weight: bolder;
+    text-align: center;
+  }
+  #titulo_modal{
+      text-align: center;
+      display: block; /* Opcional: h1 ya es un bloque por defecto */
+      margin: 0 160px;
+      font-weight: bold;
+  }
+  #titulo_menu{
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+  }
+
+  #administradores{
+     background-image: url(../images/fondo_becas.jpg);
+     background-repeat: no-repeat;
+     background-size: 100%;
+     background-color: #fff;   
+  }
+
+  #content{
+      background-color: rgba(255, 255, 255, 0.844);
+  }
+/* tabla*/
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.encabezado {
+    width: 100%;
+    background-color: red;
+    margin: 0; /* Elimina los márgenes */
+    padding: 0; /* Elimina el espaciado interno */
+    text-align: center;
+    color: #111111;
+    font-family: "Nunito";
+    font-size: 1.1em;
+    background: rgb(254, 214, 167);
+    height: 40px;
+
+}
+
+.table-responsive {
+    width: 100%; /* Ancho de la tabla */
+    margin: auto; /* Centrar la tabla */
+    border: 1px solid #ccc; /* Borde de 1 píxel y color gris claro para toda la tabla */
+    border-collapse: collapse; /* Eliminar espacios entre bordes de celdas */
+}
+
+.table-responsive table {
+    width: 100%;
+   
+}
+
+.table-responsive table td,
+.table-responsive table th {
+    height: 60px; /* Altura fija para las celdas */
+    vertical-align: middle; /* Alinear verticalmente el contenido */
+}
+
+
+
+.table-responsive th {
+    background-color: #0AA4CC; /* Color de fondo para el encabezado */
+    color: #fff; /* Color de texto para el encabezado */
+}
+
+.table-responsive tr:nth-child(even) {
+    background-color: #ddd; /* Color de fondo para filas pares (gris) */
+}
+
+.table-responsive tr:nth-child(odd) {
+    background-color: #dad2d2; /* Color de fondo para filas impares (negro) */
+}
+
+.table-responsive th, .table-responsive td {
+    border-left: none; /* Elimina el borde izquierdo en las celdas */
+    text-align: center;
+}
+
+.botones button {
+    font-size: 12px;
+    padding: 5px 10px;
+    margin-top: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.botones button i {
+    display: block; /* Hacer que el icono sea un elemento de bloque */
+    margin: auto; /* Centrar verticalmente */
+}
+/* Estilo del título del modal "Ver Más" */
+.modal-ver-mas .modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Estilo de los títulos H5 dentro del modal "Ver Más" */
+.modal-ver-mas .modal-body h5 {
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Estilo de los nombres en negritas en el modal "Ver Más" */
+.modal-ver-mas .modal-body p strong {
+    font-weight: bold;
+}
+
+/* Fondo de color para el modal "Ver Más"
+.modal-ver-mas .modal-content {
+    background-color: #87B8DF;
+} */
+
+/* Ancho y altura del modal "Ver Más" */
+.modal-ver-mas .modal-dialog {
+    max-width: 40%; /* Ancho máximo del modal (ajusta según tus necesidades) */
+}
+
+.modal-ver-mas .modal-body {
+    max-height: 60vh; /* Altura máxima del contenido (ajusta según tus necesidades) */
+    overflow-y: auto;
+}
+body::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(65, 105, 225, 0.6);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(65, 105, 225, 1);
+}
+#menu{
+    border: solid 0.2em white;
+    border-bottom-color: #007bff;
+}
+/* Estilo personalizado para el fondo del modal */
+/* Cambiar el color de fondo del área detrás del modal */
+.modal-backdrop {
+    background-color: #cacaca7e; /* Cambia #888888 al color de fondo gris que desees */
+
+}
+.nombre-foto-usuario {
+    display: flex; /* Usar flexbox para controlar la disposición */
+    justify-content: space-between; /* Colocar el nombre de usuario a la izquierda y la foto a la derecha */
+    align-items: center; /* Centrar verticalmente los elementos */
+    font-weight: bold;
+    
+}
+.nombre-usuario:hover{
+    color: blue;
+}
+.form-group{
+    text-align: left;
+}
+/* Estilo para el contenedor de paginación */
+.pagination {
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    align-items: center;
+}
+
+/* Estilo para el botón "Anterior" */
+.page-item-previous {
+    margin-top: 15px;
+    margin-left: auto; /* Mueve el botón "Anterior" hacia la derecha tanto como sea posible */
+    color: gray !important; /* Cambia el color del texto a gris y fuerza la prioridad */
+}
+
+/* Estilo para el botón "Siguiente" */
+.page-item-next {
+    margin-top: 15px;
+    margin-right: 6px; /* Añade un margen a la izquierda del botón "Siguiente" para separarlo del conteo de páginas */
+    color: gray !important; /* Cambia el color del texto a gris y fuerza la prioridad */
+}
+
+/* Estilo para el conteo de páginas */
+.page-item-count {
+    min-width: 60px;
+    text-align: center;
+    margin-top: 15px;
+    margin-left: 0;
+    color: gray !important; /* Cambia el color del texto a gris y fuerza la prioridad */
+}
+
+.column {
+    width: 48%; /* Ajusta el valor según tu diseño */
+}
+.form-container {
+    display: flex;
+    justify-content: space-between;
+}
+.form-group {
+    display: inline-block;
+    width: 48%; /* Acomoda los campos en 2 columnas */
+    margin-bottom: 20px; /* Espacio inferior entre grupos */
+    box-sizing: border-box; /* Para que el ancho incluya el relleno y el borde */
+}
+.contenedor {
+    border: 1px solid #b6b6b6;
+    margin: 20px; /* Ajusta el valor de margen según la separación que desees */
+    padding: 10px; /* Opcional: agrega relleno dentro del contenedor si es necesario */
+    
+}
+.contenedoresss{
+    border: 1px solid #0AA4CC;
+    margin: 20px; /* Ajusta el valor de margen según la separación que desees */
+    padding: 10px; /* Opcional: agrega relleno dentro del contenedor si es necesario */
+    width: 600px;
+}
+.modal-content {
+    width: 800px; /* Ajusta el ancho según tus necesidades */
+    margin: 0 auto; /* Centra horizontalmente la ventana modal */
+}
+.botones-contenedor {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    margin-top: 20px; /* Agrega espacio entre los botones y los campos */
+}
+.botones-contenedor button {
+    margin-left: 5px; /* Ajusta el espacio entre los botones */
+}
+.modal-header h5 {
+    text-align: center;
+    margin-left: 30px;
+}
+body::-webkit-scrollbar {
+    width: 6px;
+    height: 1px; /* Reducido a 4px de altura */
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(65, 105, 225, 0.6);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(65, 105, 225, 1);
+}
+.modal-ver-mas .modal-header {
+    border-bottom: 2px solid #0AA4CC; /* Cambia el color a azul (#007bff) o al color que prefieras */
+}
+
+.modal-ver-mas .modal-title {
+    margin-bottom: 0; /* Elimina el espacio entre el título y la línea inferior */
+}
+.eliminar {
+    border-bottom: 1px solid#E670D9; /* Cambia el color a rosa (#FF1493) o al color que prefieras */
+}
+
+
+#ModelDelete.modal-title {
+    margin-bottom: 0; /* Elimina el espacio entre el título y la línea inferior */
+}
+.campo-container {
+    max-width: 700px; /* Ajusta el valor según tus necesidades para separar los campos */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    display: flex;
+    flex-wrap: wrap; /* Asegura que los campos se envuelvan si no caben en el ancho máximo */
+    justify-content: space-between; /* Distribuye los campos uniformemente */
+}
+/* Para quitar el estilo de las flechas de ordenamiento en las columnas */
+table.dataTable thead>tr>th.sorting:after,
+table.dataTable thead>tr>th.sorting_asc:after,
+table.dataTable thead>tr>th.sorting_desc:after,
+table.dataTable thead>tr>th.sorting_asc_disabled:after,
+table.dataTable thead>tr>th.sorting_desc_disabled:after,
+table.dataTable thead>tr>td.sorting:after,
+table.dataTable thead>tr>td.sorting_asc:after,
+table.dataTable thead>tr>td.sorting_desc:after,
+table.dataTable thead>tr>td.sorting_asc_disabled:after,
+table.dataTable thead>tr>td.sorting_desc_disabled:after {
+    content: none; /* Esto eliminará el contenido generado (las flechas) */
+}
+
+
+

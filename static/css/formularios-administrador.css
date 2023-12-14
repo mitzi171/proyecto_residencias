@@ -1,0 +1,423 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url(../css/Nunito_Sans/NunitoSans-Regular.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+    background-image: url(../images/Web\ 1920\ –\ 1@2x.png);
+    background-size: cover;
+    background-position: left top;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.contenedor {
+    background-color: white;
+    width: 35%;
+    margin: 0 5em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+    margin-top: 5px;
+   
+}
+.contenedor .titulo {
+    background-color: #F20535;
+    width: 100%;
+    display: block;
+    padding: 1em;
+    font-size: 1.3em;
+    color: #FFFF;
+    text-align: center;
+}
+
+/* Redefine el tamaño de los elementos del formulario */
+.formulario_input {
+    width: 100%;
+    background-color: white;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    height: 35px; /* Reduzca la altura del input */
+    padding: 0 30px 0 10px;
+    transition: .3s ease all;
+    font-size: 0.9em; /* Reduzca el tamaño del texto */
+    
+}
+
+.formulario_btn {
+    font-size: 14px; /* Reduzca el tamaño del botón */
+    height: 35px; /* Reduzca la altura del botón */
+    line-height: 35px;
+    width: 40%; /* Reduzca el ancho del botón */
+}
+
+/* ... (el resto de tus estilos permanece igual) */
+
+
+.contenedor form{
+    background-color: white;
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 20px; /* Agregar 20px de espacio debajo del contenedor */
+}
+
+.contenedor form label {
+    width: 100%;
+    display: block;
+    font-weight: 700;
+    padding: 0.5em;
+    color: #111111;
+    cursor: pointer;
+}
+
+.formulario_grupo {
+    margin-bottom: 10px;
+}
+
+.formulario_grupo_input {
+    position: relative;
+}
+
+
+
+.formulario_input:focus{
+    border-bottom: 2px solid rgb(0, 0, 0, 0.8);
+    outline: none;
+}
+
+.formulario_input_error{
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    display: none;
+}
+.formulario_input_error_activo{
+    display: block;
+}
+
+.formulario_validacion_estado{
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.formulario_checkbox{
+    margin-right: 10px;
+}
+
+.formulario_mensaje{
+    height: 35px;
+    line-height: 35px;
+    background: #f66060;
+    padding: 0 10px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.formulario_mensaje_activo{
+    display: block;
+}
+
+.formulario_mensaje p{
+    margin: 0;
+}
+
+.formulario_grupo_btn_enviar{
+    display: flex;
+    /* flex-direction: column;
+    align-items: center; */
+    text-decoration: none;
+    justify-content: space-around;
+    
+    /* padding-left: 300px; */
+}
+.formulario_grupo_btn_cancelar{
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    text-decoration: none;
+    
+}
+
+
+.formulario_btn{
+    font-family: "Nunito";
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 45px;
+    line-height: 45px;
+    width: 30%;
+    background: #087CC4;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .6s ease all;
+}
+.registrar{
+    font-family: "Nunito";
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 45px;
+    line-height: 45px;
+    width: 30%;
+    background: #087CC4;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .6s ease all;
+    text-decoration: none;
+    text-align: center;
+}
+
+.cancelar{
+    font-family: "Nunito";
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 45px;
+    line-height: 45px;
+    width: 30%;
+    background: #087CC4;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .6s ease all;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+.formulario_btn:hover{
+   
+    background: rgb(179, 175, 175);
+    color: rgb(13, 13, 13);
+}
+.cancelar:hover{
+    background: rgb(179, 175, 175);
+    color: rgb(13, 13, 13);
+}
+
+.formulario_mensaje_exito{
+    font-size: 14px;
+    color: #119200;
+    margin-top: 10px;
+    display: none;
+}
+/* .cuenta {
+    font-family: "Nunito";
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 45px;
+    line-height: 45px;
+    width: 30%;
+    text-align: center;
+    padding-left: 30px;
+   
+}
+.gratis {
+    font-family: "Nunito";
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 45px;
+    line-height: 45px;
+    width: 30%;
+    text-align: center;
+    text-decoration: none;
+   
+} */
+.cuenta{
+    text-align: center;
+    font-family: "Nunito";
+    text-decoration: none;
+}
+.gratis{
+    text-decoration: none;
+
+}
+
+.formulario_mensaje_exito_activo{
+    display: block;
+}
+
+/* VALIDACION */
+.formulario_grupo_correcto .formulario_validacion_estado{
+    color: #1ed12d;
+    opacity: 1;
+}
+
+.formulario_grupo_incorrecto .formulario_label{
+    color: #bb2929;
+}
+
+.formulario_grupo_incorrecto .formulario_validacion_estado{
+    color: #bb2929;
+    opacity: 1;
+
+}
+
+.formulario_grupo_incorrecto .formulario_input{
+    border-bottom: 2px solid #bb2929;
+}
+
+/* Mediaqueris */
+@media screen and (max-width:900px) {
+    .contenedor{
+        width: 80%;
+    }
+}
+.contenedor .radio h4{
+    width: 100%;
+    display: block;
+    font-weight: 700;
+    padding: 0.5em;
+    color: #111111;
+    
+
+ }
+ .contenedor .radio > div{
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+ }
+
+ .contenedor .radio label{
+    width: 160px;
+    display: inline-block;
+    cursor: pointer;
+    color: #111111;
+    position: relative;
+    padding: 5px 15px 5px 51px;
+    font-size: 1em;
+    border-radius: 5px;
+    -moz-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+ }
+
+ .contenedor .radio label:hover{
+    background: rgb(212, 237, 246)
+ }
+ .contenedor .radio label:before{
+    content: "";
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+    position: absolute;
+    left: 15px;
+    border-radius: 50%;
+    background: none;
+    border: 3px solid blue;
+
+ }
+
+ .radio input[type=radio]{
+    display: none;
+ }
+
+ .radio input[type=radio]:checked + label:before{
+    display: none;
+ }
+ .radio input[type=radio]:checked + label{
+    padding: 5px 15px;
+    background: blue;
+    border-radius: 2px;
+    color: #fff;
+ }
+
+ /* .contenedor .checkbox label:before{
+    border-radius: 3px;
+ }
+
+ .contenedor .checkbox input[type=checkbox]{
+    display: none;
+ } */
+
+ .contenedor .checkbox label{
+    width: 320px;
+    display: inline-block;
+    cursor: pointer;
+    color: #111111;
+    position: relative;
+    padding: 5px 15px 5px 51px;
+    font-size: 1em;
+    border-radius: 5px;
+    -moz-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+ }
+h4{
+    padding: 0.6em;
+}
+
+ .contenedor .checkbox label:hover{
+    background: rgb(212, 237, 246)
+ }
+ .contenedor .checkbox label:before{
+    content: "";
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+    position: absolute;
+    left: 15px;
+    border-radius: 50%;
+    background: none;
+    border: 3px solid blue
+    
+
+ }
+
+ .checkbox input[type=checkbox]{
+    display: none;
+ }
+
+ .checkbox input[type=checkbox]:checked + label:before{
+    display: none;
+ }
+ .checkbox input[type=checkbox]:checked + label{
+    padding: 5px 15px;
+    background: blue;
+    border-radius: 2px;
+    color: #fff;
+ }
+
+ .contenedor .checkbox label:before{
+    border-radius: 3px;
+ }
+
+ .contenedor .checkbox input[type=checkbox]{
+    display: none;
+ }
+ body::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(65, 105, 225, 0.6);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(65, 105, 225, 1);
+}

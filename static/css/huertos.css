@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: "Nunito";
+    src: url(../css/Nunito_Sans/NunitoSans-Regular.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+body {
+    background-image: url(../3.png);
+    background-size: cover;
+    margin: auto;
+    position: relative; /* Agrega posición relativa para los elementos absolutos */
+    background-repeat: no-repeat;
+    
+}
+
+/* Agregar una superposición de degradado con un color semitransparente */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Evita que la superposición interfiera con los elementos */
+}
+
+.btn-disabled {
+    background-color: #ccc;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Estilo de botón habilitado */
+.btn-enabled {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+.container{
+    background: #f0f0f0b7;
+    height: 600px;
+
+}
+.col{
+    width: 70%;
+}
+.form-group{
+    width: 300px;
+}
+/* Estilo del contenedor del formulario */
+/* Estilo del contenedor del formulario */
+.contenedores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Ajusta la altura según tus necesidades para centrarlo verticalmente */
+    margin-top: 10px;
+    padding-top: 20px;
+}
+.formulario {
+    background-color: #ffffffab;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Aumenta el ancho del formulario */
+    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+    text-align: center;
+    padding: 10px;
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto; /* Centra horizontalmente el formulario */
+}
+
+/* Estilo de los grupos de formulario (cada campo y etiqueta) */
+.formulario_grupo {
+    display: inline-block;
+    width: 48%; /* Acomoda los campos en 2 columnas */
+    margin-bottom: 20px; /* Espacio inferior entre grupos */
+    box-sizing: border-box; /* Para que el ancho incluya el relleno y el borde */
+}
+/* Estilo de los campos de entrada del formulario */
+.formulario_input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    height: 40px; /* Ajusta la altura común para todos los campos */
+}
+/* Estilo para el campo de textarea */
+/* Estilo para el campo de textarea */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+    height: 80px; /* Ajusta la altura según tus necesidades */
+    overflow-y: hidden; /* Oculta las barras de desplazamiento vertical */
+}
+
+/* Alinea verticalmente el campo de peso y el campo de textarea */
+#grupo_peso_beneficiario .formulario_grupo_input input, #grupo_peso_beneficiario .formulario_grupo_input textarea {
+    vertical-align: middle;
+}
+#grupo_referencias_domicilio .formulario_grupo_input textarea {
+    height: 400px; /* Ajusta la altura para que coincida con otros campos de entrada */
+}
+#grupo_peso_beneficiario .formulario_grupo_input {
+    display: flex;
+    align-items: center;
+}
+#grupo_referencias_domicilio .formulario_grupo_input textarea {
+    height: 80px;
+    resize: none;
+  }
+  .alinear-verticalmente {
+    vertical-align: middle;
+}
+
+#grupo_peso_beneficiario .formulario_label,
+#grupo_referencias_domicilio .formulario_label {
+    margin-bottom: 0;
+}
+
+#grupo_peso_beneficiario .formulario_grupo_input,
+#grupo_referencias_domicilio .formulario_grupo_input {
+    display: flex;
+    align-items: center;
+}
+
+#grupo_referencias_domicilio .formulario_grupo_input textarea {
+    height: 400px;
+    margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+}
+.campo-container {
+    max-width: 700px; /* Ajusta el valor según tus necesidades para separar los campos */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    display: flex;
+    flex-wrap: wrap; /* Asegura que los campos se envuelvan si no caben en el ancho máximo */
+    justify-content: space-between; /* Distribuye los campos uniformemente */
+}
+
+
+/* Estilo para las etiquetas */
+.formulario_label {
+    margin-bottom: 10px; /* Agrega margen inferior a las etiquetas */
+}
+
+/* Estilo para el botón "Registrar" */
+.formulario button[type="submit"] {
+    margin-top: 20px; /* Agrega margen superior al botón */
+}
+
+
+/* Estilo para los botones */
+.btn {
+    margin-right: 10px; /* Agrega margen derecho entre los botones */
+}
+
+/* Estilo de los grupos de formulario (cada campo y etiqueta) */
+.formulario_grupo {
+    margin-bottom: 20px; /* Espacio inferior entre grupos */
+}
+
+/* Estilo de las etiquetas del formulario */
+.formulario_label {
+    display: block; /* Hace que las etiquetas ocupen todo el ancho */
+    font-weight: bold; /* Texto en negritas */
+    text-align: left; /* Texto alineado a la izquierda */
+    margin-bottom: 5px; /* Espacio inferior */
+}
+
+/* Estilo de los campos de entrada del formulario */
+.formulario_input {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px;
+    border: 1px solid #cccccc; /* Borde del campo de entrada */
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none; /* Elimina el resaltado de enfoque en el campo de entrada */
+}
+
+/* Estilo de los botones del formulario */
+.btn-primary {
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto del botón */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilo de los botones al pasar el mouse por encima */
+.btn-primary:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+/* Oculta la barra de desplazamiento vertical en el elemento con la clase "mi-elemento" */
+.mi-elemento {
+    overflow-y: hidden;
+}
+.botones-contenedor {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 10px; /* Puedes ajustar el margen según tus necesidades */
+}
+
+.botones-contenedor button {
+    width: 100px; /* Ancho común para todos los botones */
+}
+
+.botones-contenedor button[type="button"] {
+    width: 100px; /* Ancho específico para botones de tipo "button" */
+}
+.modal-title {
+    text-align: center;
+    font-weight: bold;
+}
+body::-webkit-scrollbar {
+    width: 6px;
+    height: 1px; /* Reducido a 4px de altura */
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(65, 105, 225, 0.6);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(65, 105, 225, 1);
+}
+span {
+    display: none;
+}
+
+/* Mostrar el mensaje solo cuando el campo es inválido y se ha tocado */
+input:required:invalid:not(:placeholder-shown) + span {
+    display: block;
+    color: red; /* Estilo del mensaje para campos inválidos */
+}
+
+/* Ocultar el mensaje cuando la entrada es válida y se ha tocado */
+input:required:valid + span {
+    display: none;
+}
