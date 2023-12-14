@@ -1,0 +1,437 @@
+{% extends 'base-consultas.html' %}
+{% if 'user_type' in session %}
+    {% if session['user_type'] == 'admin' %}
+        {# Mostrar menú para el administrador #}
+        {% include 'menu-modulo-consultas.html' %}
+    {% else %}
+        {% if session['area'] == 'Horta DIF' %}
+            {# Mostrar menú para la sección de Desayunos #}
+            {% include 'menu-huertos.html' %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+    {% block contenido %}
+        <div class="contenedor">
+            <h3>Huertos familiares</h3>
+            <div class="conta">
+                <div class="row align-items-center">
+                    <div class="col-sm-2">
+                        <label for="perPageSelect" class="regpag" >Registros por página:</label>
+                        <select name="per_page" id="perPageSelect" class="form-select" onchange="updatePerPage(this)">
+                            <option value="5" {% if per_page == 5 %} selected {% endif %}>5</option>
+                            <option value="10" {% if per_page == 10 %} selected {% endif %}>10</option>
+                            <option value="20" {% if per_page == 20 %} selected {% endif %}>20</option>
+                            <!-- Agrega más opciones según sea necesario -->
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="reporte">
+                        <a class="reporte" href="{{ url_for('familiares_excel') }}" target="_blank" style="text-decoration: none;">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i> Reporte
+                        </a>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="registro">
+                            <a class="registro" href="{{url_for('familiares_form')}}">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo registro
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="search-bar">
+                            <form class="form-inline d-flex justify-content-end align-items-center">
+                                <input id="searchInput" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
+                                <button class="btn btn-outline" type="button" onclick="filterTable()">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                    <div class="mt-5">
+                        <div class="table-responsive">
+                            <table class="table-responsive" id="huertos_familiares">
+                                <thead class="encabezado">
+                                    <tr>
+                                        <th>Beneficiario</th>
+                                        <th>CURP</th>
+                                        <th>INE</th>
+                                        <th>Municipio</th>
+                                        <th>Localidad</th>
+                                        <th>C.P</th>
+                                        <th>Periodo</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for familiares in Familiares %}
+                                        <tr>
+                                            <td>{{familiares.nombre_beneficiario}}</td>
+                                            <td>{{familiares.curp_beneficiario}}</td>
+                                            <td>{{familiares.ine_beneficiario}}</td>
+                                            <td>{{familiares.municipio_beneficiario}}</td>
+                                            <td>{{familiares.localidad_beneficiario}}</td>
+                                            <td>{{familiares.codigo_postal}}</td>
+                                            <td>{{familiares.periodo_apoyo}}</td>
+                                            <td>
+                                                <div class="botones">
+                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#ModelDelete{{familiares.id_beneficiario}}"> <i class="fa fa-trash"
+                                                            aria-hidden="true"></i></button>
+                                                    <button type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#modalUpdate{{familiares.id_beneficiario}}" class="btn btn-success"><i
+                                                            class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#modalVerMas{{familiares.id_beneficiario}}">
+                                                        <i class="fa fa-eye" aria-hidden="true" style="color: white;"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            
+                                                <div class="modal fade" id="ModelDelete{{familiares.id_beneficiario}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content contenedor text-dark">
+
+                                                            <label for="" class="titulo">Eliminar beneficiario</label>
+                                                            <div class="modal-body eliminar">¿Estás seguro de eliminar al beneficiario
+                                                                {{familiares.nombre_beneficiario}}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button"
+                                                                    style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                                                    class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                <a class="btn btn-danger"
+                                                                    style="background: #16B4D2; color: white; border: 1px solid #16B4D2;"
+                                                                    href="{{url_for('familiares_delete', id=familiares.id_beneficiario)}}">Eliminar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          
+                                                <!-- Modal de actualización -->
+                                                <div class="modal fade" id="modalUpdate{{familiares.id_beneficiario }}">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content contenedor text-dark">
+                                                            <div class="contenedoresss">
+                                                                <div class="modal-header">
+                                                                    <h5>Actualizar registro de {{familiares.nombre_beneficiario}}</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form
+                                                                        action="{{url_for('familiares_update', id=familiares.id_beneficiario)}}"
+                                                                        method="post" enctype="multipart/form-data">
+                                                                        <!-- Sección 1: Información personal -->
+                                                                        <div id="seccion1_{{ familiares.id_beneficiario}}">
+                                                                            <h5>Información personal</h5>
+                                                                            <br>
+                                                                            <div class="campo-container">
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-nombre-beneficiario">Nombre
+                                                                                        completo</label>
+                                                                                    <input type="text" name="nuevo-nombre-beneficiario"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.nombre_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-fecha-nacimiento">Fecha de
+                                                                                        nacimiento</label>
+                                                                                    <input type="date" name="nueva-fecha-nacimiento"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.fecha_nacimiento}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-genero-beneficiario">Genero</label>
+                                                                                    <select class="form-control"
+                                                                                        name="nuevo-genero-beneficiario">
+                                                                                        <option>{{familiares.genero}}</option>
+                                                                                        <option value="Hombre">Hombre</option>
+                                                                                        <option value="Mujer">Genero</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-estado-civil">Estado civil</label>
+                                                                                    <select class="form-control" name="nuevo-estado-civil">
+                                                                                        <option>{{familiares.estado_civil}}</option>
+                                                                                        <option value="Soltero">Soltero</option>
+                                                                                        <option value="Casado">Casado</option>
+                                                                                        <option value="Divorciado">Divorciado</option>
+                                                                                        <option value="Viudo">Viudo</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label
+                                                                                        for="nueva-escolaridad-beneficiario">Escolaridad</label>
+                                                                                    <select class="form-select"
+                                                                                        name="nueva-escolaridad-beneficiario">
+                                                                                        <option>{{familiares.escolaridad_beneficiario}}</option>
+                                                                                        <option value="Primaria">Primaria</option>
+                                                                                        <option value="Secundaria">Secundaria</option>
+                                                                                        <option value="Preparatoria">Preparatoria</option>
+                                                                                        <option value="Universidad">Universidad</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-ine-beneficiario">INE</label>
+                                                                                    <input type="text" name="nuevo-ine-beneficiario"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.ine_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-curp-beneficiario">CURP</label>
+                                                                                    <input type="text" name="nueva-curp-beneficiario"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.curp_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-telefono">Número de teléfono</label>
+                                                                                    <input type="text" name="nuevo-telefono"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.numero_telefono}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-correo">Correo electronico</label>
+                                                                                    <input type="email" name="nuevo-correo" class="form-control"
+                                                                                        value="{{familiares.correo_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="botones-contenedor">
+                                                                                    <button type="button" class="btn btn-primary me-2 btn-siguiente"
+                                                                                        style="background: #0487D9; color: white; border: 1px #0487D9 solid; margin-left: 250px;"
+                                                                                        data-familiares-id_beneficiario="{{ familiares.id_beneficiario }}" data-seccion-actual="2">Siguiente</button>
+                                                                                    <button type="submit" class="btn btn-primary me-2"
+                                                                                        style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                                        <button type="button"
+                                                                                        style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                                                                        class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Sección 2: Información domicilio -->
+                                                                        <div id="seccion2_{{ familiares.id_beneficiario }}">
+                                                                            <h5>Domicilio</h5>
+                                                                            <br>
+                                                                            <div class="campo-container">
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-municipio">Municipio</label>
+                                                                                    <input type="text" name="nuevo-municipio"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.municipio_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-localidad">Localidad</label>
+                                                                                    <input type="text" name="nueva-localidad"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.localidad_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-colonia">Colonia</label>
+                                                                                    <input type="text" name="nueva-colonia" class="form-control"
+                                                                                        value="{{familiares.colonia_beneficiario}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-codigo-postal">C.P</label>
+                                                                                    <input type="text" name="nuevo-codigo-postal"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.codigo_postal}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-numero-exterior">NE</label>
+                                                                                    <input type="text" name="nuevo-numero-exterior"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.numero_exterior}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-numero-interior">NI</label>
+                                                                                    <input type="text" name="nuevo-numero-interior"
+                                                                                        class="form-control"
+                                                                                        value="{{familiares.numero_interior}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-calle">Calle</label>
+                                                                                    <input type="text" name="nueva-calle" class="form-control"
+                                                                                        value="{{familiares.calle}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-referencia-domicilio">Referencias al
+                                                                                        domicilio</label>
+                                                                                    <textarea name="nueva-referencia-domicilio"
+                                                                                        id="nueva-referencia-domicilio" class="form-control"
+                                                                                        style="resize: none; margin: auto; height: 70px;"
+                                                                                        required cols="30"
+                                                                                        rows="10">{{familiares.referencias_domicilio}}</textarea>
+                                                                                </div>
+                                                                                <div class="botones-contenedor">
+                                                                                    <button type="button" class="btn btn-primary igualar-boton me-2 btn-anterior"
+                                                                                        style="background: #16B4D2; color: white; border: 1px #16B4D2 solid; margin-left: 150px;"
+                                                                                        data-familiares-id_beneficiario="{{ familiares.id_beneficiario }}" data-seccion-actual="1">Anterior</button>
+                                                                                    <button type="button" class="btn btn-primary me-2 btn-siguiente"
+                                                                                        style="background: #0487D9; color: white; border: 1px #0487D9 solid;"
+                                                                                        data-familiares-id_beneficiario="{{ familiares.id_beneficiario }}" data-seccion-actual="1">Siguiente</button>
+                                                                                    <button type="submit" class="btn btn-primary me-2"
+                                                                                        style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                                        <button type="button"
+                                                                                        style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                                                                        class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Sección 3: Información del programa -->
+                                                                        <div id="seccion3_{{ familiares.id_beneficiario }}">
+                                                                            <h5>Detalles programa</h5>
+                                                                            <br>
+                                                                            <div class="campo-container">
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-tipo-apoyo">Tipo de apoyo</label>
+                                                                                    <input type="text" name="nuevo-tipo-apoyo"
+                                                                                        id="nuevo-tipo-apoyo" class="form-control"
+                                                                                        value="{{familiares.tipo_apoyo}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-criterio-seleccion">Criterio de
+                                                                                        selección</label>
+                                                                                    <input type="text" name="nuevo-criterio-seleccion"
+                                                                                        id="nuevo-criterio-seleccion" class="form-control"
+                                                                                        value="{{familiares.criterio_seleccion}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nuevo-periodo-apoyo">Periodo de apoyo</label>
+                                                                                    <input type="text" name="nuevo-periodo-apoyo"
+                                                                                        id="nuevo-periodo-apoyo" class="form-control"
+                                                                                        value="{{familiares.periodo_apoyo}}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="nueva-fecha-registro">Fecha de registro</label>
+                                                                                    <input type="date" name="nueva-fecha-registro"
+                                                                                        id="nueva-fecha-registro" class="form-control"
+                                                                                        value="{{familiares.fecha_registro}}">
+                                                                                </div>
+                                                                                <div class="botones-contenedor">
+                                                                                    <button type="button" class="btn btn-primary igualar-boton me-2 btn-anterior"
+                                                                                        style="background: #16B4D2; color: white; border: 1px #16B4D2 solid; margin-left: 250px;"
+                                                                                        data-familiares-id_beneficiario="{{ familiares.id_beneficiario }}" data-seccion-actual="3">Anterior</button>
+                                                                                    <button type="submit" class="btn btn-primary me-2"
+                                                                                        style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                                        <button type="button"
+                                                                                        style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                                                                        class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                {% endfor %}
+                            
+                            </table>
+                            <script>
+                                $(document).ready(function () {
+                                    $('.btn-anterior').on('click', function () {
+                                        const familiaresId = $(this).data('familiares-id_beneficiario');
+                                        const seccionActual = $(this).data('seccion-actual');
+                                        const seccionAnterior = seccionActual - 1 > 0 ? seccionActual - 1 : 1;
+                                        mostrarSeccion(familiaresId, seccionAnterior);
+                                    });
+                            
+                                    $('.btn-siguiente').on('click', function () {
+                                        const familiaresId= $(this).data('familiares-id_beneficiario');
+                                        const seccionActual = $(this).data('seccion-actual');
+                                        const seccionSiguiente = seccionActual + 1 < 4 ? seccionActual + 1 : 3;
+                                        mostrarSeccion(familiaresId, seccionSiguiente);
+                                    });
+                            
+                                    function mostrarSeccion(id_beneficiario, seccion) {
+                                        document.getElementById(`seccion1_${id_beneficiario}`).style.display = 'none';
+                                        document.getElementById(`seccion2_${id_beneficiario}`).style.display = 'none';
+                                        document.getElementById(`seccion3_${id_beneficiario}`).style.display = 'none';
+                            
+                                        document.getElementById(`seccion${seccion}_${id_beneficiario}`).style.display = 'block';
+                                        $(`.btn-anterior[data-familiares-id_beneficiario="${id_beneficiario}"]`).data('seccion-actual', seccion);
+                                        $(`.btn-siguiente[data-familiares-id_beneficiario="${id_beneficiario}"]`).data('seccion-actual', seccion);
+                                    }
+                            
+                                    $('[id^="modalUpdate"]').on('show.bs.modal', function () {
+                                        const familiaresId= $(this).attr('id').replace('modalUpdate', '');
+                                        mostrarSeccion(familiaresId, 1);
+                                    });
+                                });
+                            </script>
+                            <script>
+                                function cancelarRegistro() {
+                                        // Redirigir al módulo principal o la página de desayunos fríos
+                                        window.location.href = "{{ url_for('familiares') }}";
+                                    }
+                            </script> 
+                        </div>
+                            <!-- Modales de Ver Más -->
+                            {% for familiares in Familiares %}
+                                                        <div class="modal fade modal-ver-mas" id="modalVerMas{{familiares.id_beneficiario}}" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Detalles del Beneficiario: {{familiares.nombre_beneficiario}}</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                            aria-label="Cerrar"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <!-- Información adicional del beneficiario -->
+                                                                        <p>Nombre: {{familiares.nombre_beneficiario}}</p>
+                                                                        <p>Fecha de nacimiento: {{familiares.fecha_nacimiento}}</p>
+                                                                        <p>Genero: {{familiares.genero}}</p>
+                                                                        <p>Estado civil: {{familiares.estado_civil }}</p>
+                                                                        <p>Escolaridad: {{familiares.escolaridad_beneficiario}}</p>
+                                                                        <p>INE: {{familiares.ine_beneficiario}}</p>
+                                                                        <p>CURP: {{familiares.curp_beneficiario}}</p>
+                                                                        <p>Número de telefono: {{familiares.numero_telefono}}</p>
+                                                                        <p>Correo electronico: {{familiares.correo_beneficiario}}</p>
+                                                                        <h5>Domicilio</h5>
+                                                                        <p>Municipio: {{familiares.municipio_beneficiario}}</p>
+                                                                        <p>Localidad: {{familiares.localidad_beneficiario}}</p>
+                                                                        <p>Colonia: {{familiares.colonia_beneficiario}}</p>
+                                                                        <p>CP: {{familiares.codigo_postal}}</p>
+                                                                        <p>NE: {{familiares.numero_exterior }}</p>
+                                                                        <p>NI: {{familiares.numero_interior}}</p>
+                                                                        <p>Calle: {{familiares.calle}}</p>
+                                                                        <p>Referencias al domicilio: {{familiares.referencias_domicilio}}</p>
+                                                                        <h5>Detalles del programa</h5>
+                                                                        <p>Tipo de apoyo: {{familiares.tipo_apoyo}}</p>
+                                                                        <p>Criterio de selección: {{familiares.criterio_seleccion}}</p>
+                                                                        <p>Periodo de apoyo: {{familiares.periodo_apoyo}}</p>
+                                                                        <p>Fecha de registro: {{familiares.fecha_registro}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p class="col-md-3" style="margin-left: 5px; margin-top: 20px;">Total de Registros: {{ total_records }}</p>
+                                                        </div>
+                                                        <div class="col-md-6 text-end">
+                                                            <div class="pagination mt-2">
+                                                                <ul class="pagination mb-0">
+                                                                    <li class="page-item page-item-custom page-item-previous">
+                                                                        {% if page > 1 %}
+                                                                        <a class="page-link" href="{{ url_for('familiares', page=page-1, per_page=per_page) }}" style="color: grey;">Anterior</a>
+                                                                        {% endif %}
+                                                                    </li>
+                                                                    <li class="page-item page-item-count">
+                                                                        <span class="page-link" style="color: grey;">{{ page }} / {{ total_pages }}</span>
+                                                                    </li>
+                                                                    <li class="page-item page-item-custom page-item-next">
+                                                                        {% if page < total_pages %}
+                                                                        <a class="page-link" href="{{ url_for('familiares', page=page+1, per_page=per_page) }}" style="color: grey;">Siguiente</a>
+                                                                        {% endif %}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                           
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-muted text-center">DIF San Felipe del Progreso</div> 
+    {% endblock %}

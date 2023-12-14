@@ -1,0 +1,27 @@
+{% extends 'base-consultas.html'%}
+{%block main%}
+    <table class="table-responsive">
+
+        <tr>
+            <th>Nombre</th>
+            <th>Escolaridad</th>
+            <th>Escuela</th>
+            <th>C.C.T</th>
+            <th>Localidad</th>
+            <th>Padre o tutor</th>
+        </tr>
+
+        {%for r in resultados%}
+       <tr>
+        {%for r in resultados%}
+        <tr>
+            <td>{{r.nombre_beneficiario}}</td>
+            <td>{{r.escolaridad_beneficiario}}</td>
+            <td>{{r.nombre_escuela}}</td>
+            <td>{{r.cct}}</td>
+            <td>{{r.localidad_escuela}}</td>
+            <td>{{r.nombre_padre}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+{%endblock%}

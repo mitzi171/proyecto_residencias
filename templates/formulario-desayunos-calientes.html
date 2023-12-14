@@ -1,0 +1,232 @@
+{% extends 'base-formularios.html' %}
+{% block contenido %}
+    <div class="contenedores">
+        <form action="{{url_for('comunitario_post')}}" method="post" name="formulario" class="formulario" id="formulario"
+            enctype="multipart/form-data">
+            <div class="titulo">
+                <h5>Formulario de registro beneficiarios</h5>
+                <h5>Desayuno escolar comunitario</h5>
+            </div>
+            <div id="seccion1">
+                <br>
+                <div class="titulo">
+                    <h5>Información escolar</h5>
+                </div>
+                <br>
+                <div class="campo-container">
+                    <div class="formulario_grupo" id="grupo_nombre_escuela">
+                        <label for="nombre_escuela" class="formulario_label">Nombre escuela:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="nombre_escuela" id="nombre_escuela" autofocus
+                                placeholder="Nombre de la institución" required>
+                            <span id="mensaje_nombre_escuela" style="color: red;">Ingrese solo letras y espacios</span>
+                        </div>
+                    </div>                    
+                    <div class="formulario_grupo" id="grupo_cct">
+                        <label for="cct" class="formulario_label">CCT:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="cct" id="cct"
+                                placeholder="Clave Centro de Trabajo" onblur="mayusculas(this.name)" required>
+                            <span id="mensaje_cct" style="color: red;">Formato incorrecto</span>
+                        </div>
+                    </div>                    
+                    <div class="formulario_grupo" id="grupo_localidad">
+                        <label for="localidad_escuela" class="formulario_label">Localidad:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="localidad_escuela" id="localidad_escuela"
+                                placeholder="Ingrese la localidad" required>
+                            <span id="mensaje_localidad"  style="color: red;">Sintaxis invalida. Ingrese solo letras.</span>
+                        </div>
+                    </div>  
+                    <br><br><br><br><br><br>
+                    <div class="botones-contenedor">
+                        <button type="button" class="btn btn-primary"
+                            style="background: #0487D9; color: white; border: 1px #0487D9 solid;"
+                            onclick="mostrarSeccion(2)">Siguiente</button>
+                        <button type="button" class="btn btn-secondary"
+                            style="width: 100px; height: 39px; background: #F80526; color: white; border: 1px #F80526 solid;"
+                            onclick="cancelarRegistro()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sección 2: Información personal -->
+            <div id="seccion2" class="seccion">
+                <br>
+                <div class="titulo">
+                    <h5>Información personal</h5>
+                </div>
+                <br>
+                <div class="campo-container">
+                    <div class="formulario_grupo" id="grupo_nombre_beneficiario">
+                        <label for="nombre_beneficiario" class="formulario_label">Nombre completo:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="nombre_beneficiario" id="nombre_beneficiario"
+                                placeholder="Nombre completo del beneficiario" required>
+                            <span id="mensaje_nombre_beneficiario" style="color: red;">Sintaxis invalida ingrese solo letras</span>
+                        </div>
+                    </div>                                        
+                    <div class="formulario_grupo" id="grupo_escolaridad_beneficiario">
+                        <label for="escolaridad_beneficiario" class="formulario_label">Escolaridad:</label>
+                        <select name="escolaridad_beneficiario" class="form-select" id="escolaridad_beneficiario" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Preescolar">Preescolar</option>
+                            <option value="Primaria">Primaria</option>
+                        </select>
+                    </div>
+                    <div class="formulario_grupo" id="grupo_talla">
+                        <label for="talla_beneficiario" class="formulario_label">Talla:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="talla_beneficiario" id="talla_beneficiario"
+                                placeholder="Talla del beneficiario" required>
+                            <span id="mensaje_talla" style="color: red;">Ingrese una talla válida</span>
+                        </div>
+                    </div>
+                    <div class="formulario_grupo" id="grupo_curp_beneficiario">
+                        <label for="curp_beneficiario" class="formulario_label">CURP:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="curp_beneficiario" id="curp_beneficiario"
+                                placeholder="CURP del beneficiario" onblur="mayusculas(this.name)"  required>
+                            <span id="mensaje_curp" style="color: red;">Ingrese una CURP válida</span>
+                        </div>
+                    </div>                                       
+                    <div class="formulario_grupo" id="grupo_peso_beneficiario">
+                        <label for="peso_beneficiario" class="formulario_label">Peso del beneficiario:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="peso_beneficiario" id="peso_beneficiario"
+                                placeholder="Peso en Kg del beneficiario" required>
+                            <span id="mensaje_peso" style="color: red;">Sintaxis incorrecta</span>
+                        </div>
+                    </div>
+                    <div class="formulario_grupo" id="grupo_referencias_domicilio">
+                        <label for="referencias_domicilio" class="formulario_label">Referencias al domicilio:</label>
+                        <div class="formulario_grupo_input">
+                            <textarea class="formulario_input" id="referencias_domicilio" name="referencias_domicilio"
+                                style="resize: none; margin: auto; height: 50px;" required></textarea>
+                        </div>
+                    </div>
+                    <div class="botones-contenedor">
+                        <button type="button" class="btn btn-primary igualar-boton"
+                            style="background: #16B4D2; color: white; border: 1px #16B4D2 solid; margin-left: 400px;"
+                            onclick="mostrarSeccion(1)">Anterior</button>
+                        <button type="button" class="btn btn-primary"
+                            style="background: #0487D9; color: white; border: 1px #0487D9 solid;"
+                            onclick="mostrarSeccion(3)">Siguiente</button>
+                        <button type="button" class="btn btn-secondary"
+                            style="width: 100px; height: 39px; background: #F80526; color: white; border: 1px #F80526 solid;"
+                            onclick="cancelarRegistro()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Sección 3: Información del padre -->
+            <div id="seccion3" class="seccion">
+                <br>
+                <div class="titulo">
+                    <h5>Información padre o tutor</h5>
+                </div>
+                <br>
+                <div class="campo-container">
+                    <div class="formulario_grupo" id="grupo_nombre_padre">
+                        <label for="nombre_padre" class="formulario_label">Nombre completo:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="nombre_padre" id="nombre_padre"
+                                placeholder="Nombre completo del padre o tutor" required>
+                            <span id="mensaje_nombre_padre"  style="color: red;">Ingrese un nombre válido</span>
+                        </div>
+                    </div>
+                    <div class="formulario_grupo" id="grupo_escolaridad_padre">
+                        <label for="escolaridad_padre" class="formulario_label">Escolaridad:</label>
+                        <select name="escolaridad_padre" class="form-select" id="escolaridad_padre" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Preescolar">Preescolar</option>
+                            <option value="Primaria">Primaria</option>
+                            <option value="Secundaria">Secundaria</option>
+                            <option value="Preparatoria">Preparatoria</option>
+                            <option value="Universidad">Universidad</option>
+                        </select>
+                    </div>
+                    <div class="formulario_grupo" id="grupo_ine_padre">
+                        <label for="ine_padre" class="formulario_label">INE:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="ine_padre" id="ine_padre"
+                                placeholder="INE del padre o tutor" onblur="mayusculas(this.name)" required>
+                            <span id="mensaje_ine" style="color: red;">Ingrese una clave del INE válida</span>
+                        </div>
+                    </div>                    
+                    <div class="formulario_grupo" id="grupo_curp_padre">
+                        <label for="curp_padre" class="formulario_label">CURP:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="curp_padre" id="curp_padre"
+                                placeholder="CURP del padre o tutor" onblur="mayusculas(this.name)" required>
+                            <span id="mensaje_curp_padre" style="color: red;">Ingrese una CURP válida</span>
+                        </div>
+                    </div>                    
+                    <div class="formulario_grupo" id="grupo_telefono">
+                        <label for="telefono_padre" class="formulario_label">Número de teléfono:</label>
+                        <div class="formulario_grupo_input">
+                            <input type="text" class="formulario_input" name="telefono_padre" id="telefono_padre"
+                                placeholder="Número de teléfono de contacto" required>
+                            <span id="mensaje_telefono" style="color: red;">Ingrese un número de teléfono válido</span>
+                        </div>
+                    </div>                    
+                    <div class="formulario_grupo" id="grupo_estado_civil">
+                        <label for="estado_civil" class="formulario_label">Estado civil:</label>
+                        <select name="estado_civil" class="form-select" id="estado_civil" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="soltero">Soltero</option>
+                            <option value="casado">Casado</option>
+                            <option value="divorciado">Divorciado</option>
+                            <option value="viudo">Viudo</option>
+                        </select>
+                    </div>
+                    <div class="botones-contenedor">
+                        <button type="button" class="btn btn-primary igualar-boton"
+                            style="background: #16B4D2; color: white; border: 1px solid #16B4D2; margin-left: 400px ;"
+                            onclick="mostrarSeccion(2)">Anterior</button>
+                        <button type="submit" class="btn btn-primary igualar-boton"
+                            style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Registrar</button>
+                        <button type="button" class="btn btn-secondary igualar-boton"
+                            style="width: 100px; height: 39px; background: #F80526; color: white; border: 1px #F80526 solid;"
+                            onclick="cancelarRegistro()">Cancelar</button>
+                    </div>
+                    <div class="modal fade" tabindex="-1" role="dialog" id="alertaModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content contenedor text-dark">
+                                <div class="modal-header">
+                                    <label for="" class="titulo" style="margin-left: 110px; font-weight: bold;">Datos incompletos o incorrectos</label>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="eliminar">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="alertaMensaje">
+                                    <!-- Contenido de la alerta -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"
+                                    style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                    class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function mostrarSeccion(seccion) {
+            document.getElementById('seccion1').style.display = 'none';
+            document.getElementById('seccion2').style.display = 'none';
+            document.getElementById('seccion3').style.display = 'none';
+
+            document.getElementById('seccion' + seccion).style.display = 'block';
+        }
+
+        // Mostrar la primera sección al cargar la página
+        mostrarSeccion(1);
+
+        function cancelarRegistro() {
+            // Redirigir al módulo principal o la página de desayunos fríos
+            window.location.href = "{{ url_for('comunitario') }}";
+        }
+    </script>
+{% endblock %}

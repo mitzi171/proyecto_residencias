@@ -1,0 +1,44 @@
+{% extends 'base-formularios-administracion.html' %}
+{% block contenido %}
+    <div class="contenedor">
+        <label for="" class="titulo">Formulario de actualización</label>
+        <form action="{{ url_for('perfil_update', id=usuario.id) }}" method="post" name="formulario" class="formulario" id="formulario" enctype="multipart/form-data">
+            <!-- Agrega un campo oculto para almacenar la URL de origen -->
+            <input type="hidden" name="origin" value="{{ request.referrer }}">
+            <div class="formulario_grupo" id="grupo_nombre">
+                <label for="nuevo-nombre-usuario" class="formulario_label">Nombre: </label>
+                <div class="formulario_grupo_input">
+                    <input type="text" class="formulario_input" name="nuevo-nombre-usuario" id="nuevo-nombre-usuario" autofocus placeholder="Escribe tu nombre" value="{{ usuario.nombre }}">
+                    <i class="formulario_validacion_estado fa fa-times-circle"></i>
+                </div>
+            </div>
+            <div class="formulario_grupo" id="grupo_apellidos">
+                <label for="nuevos-apellidos" class="formulario_label">Apellidos: </label>
+                <div class="formulario_grupo_input">
+                    <input type="text" class="formulario_input" name="nuevos-apellidos" id="nuevos-apellidos" autofocus placeholder="Escribe tus apellidos" value="{{ usuario.apellidos }}">
+                    <i class="formulario_validacion_estado fa fa-times-circle"></i>
+                </div>
+            </div>
+            <div class="formulario_grupo" id="grupo_usuario">
+                <label for="nuevo-usuario" class="formulario_label">Usuario: </label>
+                <div class="formulario_grupo_input">
+                    <input type="text" class="formulario_input" name="nuevo-usuario" id="nuevo-usuario" autofocus placeholder="Escribe tu usuario" value="{{ usuario.usuario }}">
+                </div>
+            </div>
+            <div class="formulario_grupo">
+                <label for="nueva-imagen-usuario" class="formulario_label">Foto:</label>
+                <input type="file" name="nueva-imagen-usuario" id="nueva-imagen-usuario" class="form-control">
+                {% if usuario.foto %}
+                    <p>Imagen cargada anteriormente: {{ usuario.foto }}</p>
+                {% else %}
+                    <p>Ningún elemento seleccionado</p>
+                {% endif %}
+            </div>
+            <div class="formulario_grupo formulario_grupo_btn_enviar">
+                <a href="javascript:history.go(-1);" class="cancelar">Cancelar</a>
+                <button type="submit" class="formulario_btn">Actualizar</button>
+                <p class="formulario_mensaje_exito" id="formulario_mensaje_exito">Formulario enviado correctamente!</p>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+    {% block contenido %}
+    <br><br><br>
+        <div class="contenedores">
+            <div class="icono-usuario">
+                <i class="fas fa-user"></i>
+            </div>
+            <form action="{{url_for('login_post')}}" name="formulario" method="POST" class="formulario" id="formulario">
+                <!-- Grupo: nombre -->
+                <div class="formulario_grupo" id="grupo_nombre">
+                    <label for="nombre" class="formulario_label">Usuario: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="text" class="formulario_input" name="usuario" id="usuario" autofocus
+                            placeholder="Escribe tu usuario" required>
+                    </div>
+                </div>
+                <!-- Grupo: Contraseña -->
+                <div class="formulario_grupo" id="grupo_password">
+                    <label for="password" class="formulario_label">Contraseña: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="password" class="formulario_input" name="password" id="password"
+                            placeholder="Escribe tu contraseña" required>
+                    </div>
+                </div>
+                <div class="formulario_grupo formulario_grupo_btn_enviar">
+                    <button type="submit" class="formulario_btn">Registrar</button>
+                </div>
+            </form>
+        </div>
+    {% endblock %}

@@ -1,0 +1,250 @@
+{% include 'menu-modulo-consultas.html' %}
+    {% block contenido %}
+        <div class="contenedor">
+            <h3>Desayunos frios</h3>
+            <div class="col-sm-4">
+                <div class="ola justify-content-between">
+                    <a class="btn1" href="{{ url_for('generar_reporte_excel') }}" target="_blank" style="text-decoration: none;">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Reporte
+                    </a>                                                            
+                    <div class="registro">
+                        <a class="registro" href="{{url_for('frio_form')}}"><i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo registro</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <div class="table-responsive">
+                    <table class="table-responsive" id="desayunos_frios">
+                        <thead class="encabezado">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Escolaridad</th>
+                                <th>Escuela</th>
+                                <th>C.C.T</th>
+                                <th>Localidad</th>
+                                <th>Padre o tutor</th>
+                                <th>Telefono</th>
+                                <th colspan="2">Acciones</th>
+                            </tr>
+                        
+                            {%for frio in Frio%}
+                        </thead>
+                            <tr>
+                                <td>{{frio.nombre_beneficiario}}</td>
+                                <td>{{frio.escolaridad_beneficiario}}</td>
+                                <td>{{frio.nombre_escuela}}</td>
+                                <td>{{frio.cct}}</td>
+                                <td>{{frio.localidad_escuela}}</td>
+                                <td>{{frio.nombre_padre}}</td>
+                                <td>{{frio.telefono_padre}}</td>
+                                <td>
+                                 <div class="botones">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModelDelete{{frio.id}}"> <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalUpdate{{frio.id}}" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerMas{{frio.id}}">
+                                        <i class="fa fa-eye" aria-hidden="true" style="color: white;"></i>
+                                    </button>
+                                 </div>
+                                </td>
+                                <td>
+                                    <div class="modal fade" id="ModelDelete{{frio.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content contenedor text-dark">
+                                            
+                                                <label for="" class="titulo">Eliminar beneficiario</label>
+                                            <div class="modal-body">¿Estás seguro de eliminar al beneficiario {{frio.nombre_beneficiario}}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" style="background: #F80526; color: white; border: 1px #F80526 solid;" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <a class="btn btn-danger" style="background: #16B4D2; color: white; border: 1px solid #16B4D2;" href="{{url_for('frios_delete', id=frio.id)}}">Eliminar</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </td>                                                                               
+                                <td>
+                                    <!-- Modal de actualización -->
+                                    <div class="modal fade" id="modalUpdate{{ frio.id }}">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content contenedor text-dark">
+                                                <div class="contenedor">
+                                                    <div class="modal-header">
+                                                        <h5>Actualizar registro de {{frio.nombre_beneficiario}}</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{url_for('frios_update', id=frio.id)}}" method="post"
+                                                            enctype="multipart/form-data">
+                                                        <!-- Sección 1: Información de la escuela -->
+                                                            <div id="seccion1">
+                                                            <h5>Información escolar</h5>
+                                                            <div class="form-group">
+                                                            <label for="nuevo-nombre-escuela">Nombre de la institución</label>
+                                                            <input type="text" name="nuevo-nombre-escuela" id="nuevo-nombre-escuela" class="form-control" value="{{frio.nombre_escuela}}">
+                                                        </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-cct">Clave Centro de Trabajo (CCT)</label>
+                                                                <input type="text" name="nuevo-cct" id="nuevo-cct" class="form-control" value="{{frio.cct}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-localidad-escuela">Localidad</label>
+                                                                <input type="text" name="nueva-localidad-escuela" id="nueva-localidad-escuela" class="form-control" value="{{frio.localidad_escuela}}">
+                                                            </div>
+                                                            <br>
+                                                            <div class="botones-contenedor">
+                                                                <button type="button" class="btn btn-primary" style="background: #0487D9; color: white; border: 1px #0487D9 solid;" onclick="mostrarSeccion(2)">Siguiente</button>
+                                                                <button type="submit" class="btn btn-primary igualar-boton" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Sección 2: Información personal -->
+                                                        <div id="seccion2">
+                                                            <h5>Información personal</h5>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-nombre-beneficiario">Nombre completo</label>
+                                                                <input type="text" name="nuevo-nombre-beneficiario" class="form-control" value="{{frio.nombre_beneficiario}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-escolaridad-beneficiario">Escolaridad</label>
+                                                                <select class="form-control" name="nueva-escolaridad-beneficiario">
+                                                                    <option>{{frio.escolaridad_beneficiario}}</option>
+                                                                    <option value="preescolar">Preescolar</option>
+                                                                    <option value="primaria">Primaria</option>
+                                                                    <option value="secundaria">Secundaria</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-talla-beneficiario">Talla</label>
+                                                                <input type="text" name="nueva-talla-beneficiario" class="form-control" value="{{frio.talla_beneficiario}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-curp-beneficiario">CURP</label>
+                                                                <input type="text" name="nueva-curp-beneficiario" class="form-control" value="{{frio.curp_beneficiario}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-peso-beneficiario">Peso</label>
+                                                                <input type="text" name="nuevo-peso-beneficiario" class="form-control" value="{{frio.peso_beneficiario}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-referencia-domicilio">Referencias al domicilio</label>
+                                                                <textarea name="nueva-referencia-domicilio" id="nueva-referencia-domicilio" class="form-control" style="resize: none; margin: auto;" required cols="30" rows="10">{{frio.referencias_domicilio}}</textarea>
+                                                              </div>
+                                                            <div class="botones-contenedor d-flex justify-content-between">
+                                                                <button type="button" class="btn btn-primary igualar-boton me-2" style="background: #16B4D2; color: white; border: 1px #16B4D2 solid;" onclick="mostrarSeccion(1)">Anterior</button>
+                                                                <button type="button" class="btn btn-primary me-2" style="background: #0487D9; color: white; border: 1px #0487D9 solid;" onclick="mostrarSeccion(3)">Siguiente</button>
+                                                                <button type="submit" class="btn btn-primary me-2" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                            </div> 
+                                                        </div>
+                                                        <!-- Sección 3: Información del padre o tutor -->
+                                                        <div id="seccion3">
+                                                            <h5>Información del padre o tutor</h5>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-nombre-padre">Nombre completo</label>
+                                                                <input type="text" name="nuevo-nombre-padre" class="form-control" value="{{frio.nombre_padre}}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nueva-escolaridad-padre">Escolaridad</label>
+                                                                <select class="form-control" name="nueva-escolaridad-padre">
+                                                                    <option>{{frio.escolaridad_padre}}</option>
+                                                                    <option value="Preescolar">Preescolar</option>
+                                                                    <option value="Primaria">Primaria</option>
+                                                                    <option value="Secundaria">Secundaria</option>
+                                                                    <option value="Preparatoria">Preparatoria</option>
+                                                                    <option value="Universidad">Universidad</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-ine-padre">INE</label>
+                                                                <input type="text" name="nuevo-ine-padre" class="form-control" value="{{frio.ine_padre}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-curp-padre">CURP</label>
+                                                                <input type="text" name="nuevo-curp-padre" class="form-control" value="{{frio.curp_padre}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-telefono-padre">Número de teléfono</label>
+                                                                <input type="number" name="nuevo-telefono-padre" class="form-control" value="{{frio.telefono_padre}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="nuevo-estado-civil">Estado civil</label>
+                                                                <select class="form-select" name="nuevo-estado-civil">
+                                                                    <option>{{frio.estado_civil}}</option>
+                                                                    <option value="soltero">Soltero</option>
+                                                                    <option value="casado">Casado</option>
+                                                                    <option value="divorciado">Divorciado</option>
+                                                                    <option value="viudo">Viudo</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="botones-contenedor d-flex justify-content-between">
+                                                                <button type="button" class="btn btn-primary igualar-boton me-2" style="background: #16B4D2; color: white; border: 1px #16B4D2 solid;" onclick="mostrarSeccion(2)">Anterior</button>
+                                                                <button type="submit" class="btn btn-primary me-2" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                                <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+                        <script>
+                            function mostrarSeccion(seccion) {
+                                document.getElementById('seccion1').style.display = 'none';
+                                document.getElementById('seccion2').style.display = 'none';
+                                document.getElementById('seccion3').style.display = 'none';
+                    
+                                document.getElementById('seccion' + seccion).style.display = 'block';
+                            }
+                    
+                            // Mostrar la primera sección al cargar la página
+                            mostrarSeccion(1);
+                    
+                            function cancelarRegistro() {
+                            // Redirigir al módulo principal o la página de desayunos fríos
+                            window.location.href = "{{ url_for('frios') }}";
+                        }
+                        </script>
+        <div class="card-footer text-muted text-center">DIF San Felipe del Progreso</div>
+            </div>
+            <!-- Modales de Ver Más -->
+        {% for frio in Frio %}
+            <div class="modal fade modal-ver-mas" id="modalVerMas{{frio.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detalles del Beneficiario: {{frio.nombre_beneficiario}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Información adicional del beneficiario -->
+                            <p>Nombre: {{frio.nombre_beneficiario}}</p>
+                            <p>Curp: {{frio.curp_beneficiario}}</p>
+                            <p>Escolaridad: {{frio.escolaridad_beneficiario}}</p>
+                            <p>Talla: {{frio.talla_beneficiario}}</p>
+                            <p>peso: {{frio.peso_beneficiario}}</p>
+                            <h5>Detalles escuela</h5>
+                            <p>Escuela: {{frio.nombre_escuela}}</p>
+                            <p>C.C.T: {{frio.cct}}</p>
+                            <p>Localidad: {{frio.localidad_escuela}}</p>
+                            <h5>Detalles padre o tutor</h5>
+                            <p>Padre o tutor: {{frio.nombre_padre}}</p>
+                            <p>Escolaridad padre o tutor: {{frio.escolaridad_padre}}</p>
+                            <p>INE: {{frio.ine_padre}}</p>
+                            <p>Curp padre o tutor: {{frio.curp_padre}}</p>
+                            <p>Teléfono: {{frio.telefono_padre}}</p>
+                            <p>Estadon civil padre o tutor: {{frio.estado_civil}}</p>
+                            <h5>Domicilio</h5>
+                            <p>Referencias al domicilio: {{frio.referencias_domicilio}}</p>
+
+
+                            <!-- Agrega más campos según tus necesidades -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}

@@ -1,0 +1,273 @@
+{% extends 'base-consultas.html' %}
+{% include 'menu-modulo-consultas.html' %}
+    {% block contenido %}
+        <div class="contenedor">
+            <h3>Desayuno escolar comunitario</h3>
+            <div class="col-sm-4">
+                <div class="ola justify-content-between">
+                    <!-- Button trigger modal -->
+                    <a class="btn1" href="{{ url_for('comunitario_excel') }}" target="_blank" style="text-decoration: none;">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Reporte
+                    </a> 
+                    <div class="registro">
+                        <a class="registro" href="{{url_for('comunitario_form')}}"><i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo registro</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <div class="table-responsive">
+                    <table class="table-responsive" id="desayunos_calientes">
+                        <thead class="encabezado">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Escolaridad</th>
+                                <th>Escuela</th>
+                                <th>C.C.T</th>
+                                <th>Localidad</th>
+                                <th>Padre o tutor</th>
+                                <th>Telefono</th>
+                                <th colspan="2">Acciones</th>
+                            </tr>
+                            {%for comunitario in Comunitario %}
+                        </thead>
+                        <tr>
+                            <td>{{comunitario.nombre_beneficiario}}</td>
+                            <td>{{comunitario.escolaridad_beneficiario}}</td>
+                            <td>{{comunitario.nombre_escuela}}</td>
+                            <td>{{comunitario.cct}}</td>
+                            <td>{{comunitario.localidad_escuela}}</td>
+                            <td>{{comunitario.nombre_padre}}</td>
+                            <td>{{comunitario.telefono_padre}}</td>
+                            <td>
+                                <div class="botones">
+                                   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModelDelete{{comunitario.id}}"> <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                   <button type="button" data-bs-toggle="modal" data-bs-target="#modalUpdate{{comunitario.id}}" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalVerMas{{comunitario.id}}">
+                                        <i class="fa fa-eye" aria-hidden="true" style="color: white;"></i>
+                                    </button> 
+                                </div>
+                            </td>
+                            <td>
+                                <div class="modal fade" id="ModelDelete{{comunitario.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content contenedor text-dark">
+                                        
+                                            <label for="" class="titulo">Eliminar beneficiario</label>
+                                        <div class="modal-body">¿Estás seguro de eliminar al beneficiario {{comunitario.nombre_beneficiario}}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" style="background: #F80526; color: white; border: 1px #F80526 solid;" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a class="btn btn-danger" style="background: #16B4D2; color: white; border: 1px solid #16B4D2;" href="{{url_for('comunitario_delete', id=comunitario.id)}}">Eliminar</a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </td>     
+                            <td>
+                                <!-- Modal de actualización -->
+                                <div class="modal fade" id="modalUpdate{{ comunitario.id }}">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content contenedor text-dark">
+                                            <div class="contenedor">
+                                                <div class="modal-header">
+                                                    <h5>Actualizar registro de {{comunitario.nombre_beneficiario}}</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{url_for('comunitario_update', id=comunitario.id)}}" method="post"
+                                                        enctype="multipart/form-data">
+                                                    <!-- Sección 1: Información de la escuela -->
+                                                        <div id="seccion1">
+                                                        <h5>Información escolar</h5>
+                                                        <div class="form-group">
+                                                        <label for="nuevo-nombre-escuela">Nombre</label>
+                                                        <input type="text" name="nuevo-nombre-escuela" id="nuevo-nombre-escuela" class="form-control" value="{{comunitario.nombre_escuela}}">
+                                                    </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-cct">Clave Centro de Trabajo (CCT)</label>
+                                                            <input type="text" name="nuevo-cct" id="nuevo-cct" class="form-control" value="{{comunitario.cct}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-localidad-escuela">Localidad</label>
+                                                            <input type="text" name="nueva-localidad-escuela" id="nueva-localidad-escuela" class="form-control" value="{{comunitario.localidad_escuela}}">
+                                                        </div>
+                                                        <br>
+                                                        <div class="botones-contenedor">
+                                                            <button type="button" class="btn btn-primary" style="background: #0487D9; color: white; border: 1px #0487D9 solid;" onclick="mostrarSeccion(2)">Siguiente</button>
+                                                            <button type="submit" class="btn btn-primary igualar-boton" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                            <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Sección 2: Información personal -->
+                                                    <div id="seccion2">
+                                                        <h5>Información personal</h5>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-nombre-beneficiario">Nombre completo</label>
+                                                            <input type="text" name="nuevo-nombre-beneficiario" class="form-control" value="{{comunitario.nombre_beneficiario}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-escolaridad-beneficiario">Escolaridad</label>
+                                                            <select class="form-control" name="nueva-escolaridad-beneficiario">
+                                                                <option>{{comunitario.escolaridad_beneficiario}}</option>
+                                                                <option value="preescolar">Preescolar</option>
+                                                                <option value="primaria">Primaria</option>
+                                                                <option value="secundaria">Secundaria</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-talla-beneficiario">Talla</label>
+                                                            <input type="text" name="nueva-talla-beneficiario" class="form-control" value="{{comunitario.talla_beneficiario}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-curp-beneficiario">CURP</label>
+                                                            <input type="text" name="nueva-curp-beneficiario" class="form-control" value="{{comunitario.curp_beneficiario}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-peso-beneficiario">Peso</label>
+                                                            <input type="text" name="nuevo-peso-beneficiario" class="form-control" value="{{comunitario.peso_beneficiario}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-referencia-domicilio">Referencias al domicilio</label>
+                                                            <textarea name="nueva-referencia-domicilio" id="nueva-referencia-domicilio" class="form-control" style="resize: none; margin: auto;" required cols="30" rows="10">{{comunitario.referencias_domicilio}}</textarea>
+                                                        </div>
+                                                        <div class="botones-contenedor d-flex justify-content-between">
+                                                            <button type="button" class="btn btn-primary igualar-boton me-2" style="background: #16B4D2; color: white; border: 1px #16B4D2 solid;" onclick="mostrarSeccion(1)">Anterior</button>
+                                                            <button type="button" class="btn btn-primary me-2" style="background: #0487D9; color: white; border: 1px #0487D9 solid;" onclick="mostrarSeccion(3)">Siguiente</button>
+                                                            <button type="submit" class="btn btn-primary me-2" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                            <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Sección 3: Información del padre o tutor -->
+                                                    <div id="seccion3">
+                                                        <h5>Información del padre o tutor</h5>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-nombre-padre">Nombre completo</label>
+                                                            <input type="text" name="nuevo-nombre-padre" class="form-control" value="{{comunitario.nombre_padre}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-escolaridad-padre">Escolaridad</label>
+                                                            <select class="form-control" name="nueva-escolaridad-padre">
+                                                                <option>{{comunitario.escolaridad_padre}}</option>
+                                                                <option value="Preescolar">Preescolar</option>
+                                                                <option value="Primaria">Primaria</option>
+                                                                <option value="Secundaria">Secundaria</option>
+                                                                <option value="Preparatoria">Preparatoria</option>
+                                                                <option value="Universidad">Universidad</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-ine-padre">INE</label>
+                                                            <input type="text" name="nuevo-ine-padre" class="form-control" value="{{comunitario.ine_padre}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-curp-padre">CURP</label>
+                                                            <input type="text" name="nuevo-curp-padre" class="form-control" value="{{comunitario.curp_padre}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-telefono-padre">Número de teléfono</label>
+                                                            <input type="number" name="nuevo-telefono-padre" class="form-control" value="{{comunitario.telefono_padre}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-estado-civil">Estado civil</label>
+                                                            <select class="form-select" name="nuevo-estado-civil">
+                                                                <option>{{comunitario.estado_civil}}</option>
+                                                                <option value="soltero">Soltero</option>
+                                                                <option value="casado">Casado</option>
+                                                                <option value="divorciado">Divorciado</option>
+                                                                <option value="viudo">Viudo</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="botones-contenedor d-flex justify-content-between">
+                                                            <button type="button" class="btn btn-primary igualar-boton me-2" style="background: #16B4D2; color: white; border: 1px #16B4D2 solid;" onclick="mostrarSeccion(2)">Anterior</button>
+                                                            <button type="submit" class="btn btn-primary me-2" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid;">Actualizar</button>
+                                                            <button type="button" class="btn btn-secondary" style="background: #F80526; color: white; border: 1px #F80526 solid;" onclick="cancelarRegistro()">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <script>
+                        function mostrarSeccion(seccion) {
+                            document.getElementById('seccion1').style.display = 'none';
+                            document.getElementById('seccion2').style.display = 'none';
+                            document.getElementById('seccion3').style.display = 'none';
+                
+                            document.getElementById('seccion' + seccion).style.display = 'block';
+                        }
+                
+                        // Mostrar la primera sección al cargar la página
+                        mostrarSeccion(1);
+                
+                        function cancelarRegistro() {
+                        // Redirigir al módulo principal o la página de desayunos fríos
+                        window.location.href = "{{ url_for('comunitario') }}";
+                        }
+                    </script>
+                    <div class="card-footer text-muted text-center">DIF San Felipe del Progreso</div>
+                    
+                        <!-- Modales de Ver Más -->
+                    {% for comunitario in Comunitario %}
+                        <div class="modal fade modal-ver-mas" id="modalVerMas{{comunitario.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Detalles del Beneficiario: {{comunitario.nombre_beneficiario}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Información adicional del beneficiario -->
+                                        <p>Nombre: {{comunitario.nombre_beneficiario}}</p>
+                                        <p>Curp: {{comunitario.curp_beneficiario}}</p>
+                                        <p>Escolaridad: {{comunitario.escolaridad_beneficiario}}</p>
+                                        <p>Talla: {{comunitario.talla_beneficiario}}</p>
+                                        <p>peso: {{comunitario.peso_beneficiario}}</p>
+                                        <h5>Detalles escuela</h5>
+                                        <p>Escuela: {{comunitario.nombre_escuela}}</p>
+                                        <p>C.C.T: {{comunitario.cct}}</p>
+                                        <p>Localidad: {{comunitario.localidad_escuela}}</p>
+                                        <h5>Detalles padre o tutor</h5>
+                                        <p>Padre o tutor: {{comunitario.nombre_padre}}</p>
+                                        <p>Escolaridad padre o tutor: {{comunitario.escolaridad_padre}}</p>
+                                        <p>INE: {{comunitario.ine_padre}}</p>
+                                        <p>Curp padre o tutor: {{comunitario.curp_padre}}</p>
+                                        <p>Teléfono: {{comunitario.telefono_padre}}</p>
+                                        <p>Estadon civil padre o tutor: {{comunitario.estado_civil}}</p>
+                                        <h5>Domicilio</h5>
+                                        <p>Referencias al domicilio: {{comunitario.referencias_domicilio}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    $('#tabla_admin').DataTable({
+                        "language": {
+                            "lengthMenu": "<p id='leg'>ORDEN</p>_MENU_",
+                            "zeroRecords": "Lo sentimos. No se encontraron registros que coincidan. <p align='center'></p>",
+                            "info": "PÁGINA _PAGE_ DE _PAGES_",
+                            "infoEmpty": "No hay registros aún.",
+                            "infoFiltered": "(Mostrando _TOTAL_ coincidencias de un total de _MAX_ registros)",
+                            "search": "<p id='leg'>CRITERIOS DE BÚSQUEDA</p>",
+                            "LoadingRecords": "Cargando...",
+                            "Processing": "Procesando...",
+                            "SearchPlaceholder": "Comience a teclear...",
+                            "paginate": {
+                                "previous": "Anterior",
+                                "next": "Siguiente"
+                            }
+                        },
+                       "pageLength": 4,
+                       "drawCallback": function (settings){
+                        const btnEliminarArray = document.querySelectorAll('.btn-eliminar')
+            
+                            //Elimina los eventos anteriores para evitar duplicados
+                            btnEliminarArray.forEach((btnEliminar) => {
+                            btnEliminar.removeEventListener('click', eliminarUsuario)
+                        })
+                       }
+                    })
+    {% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base-formulario-registro-usuarios.html' %}
+    {% block contenido %}
+        <div class="contenedor">
+            <label for="" class="titulo">Formulario de Registro</label>
+            <form action="{{url_for('usuarios_post')}}" method="post" name="formulario" class="formulario" id="formulario" enctype="multipart/form-data">
+                <div class="formulario_grupo" id="grupo_nombre">
+                    <label for="nombre" class="formulario_label">Nombre: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="text" class="formulario_input" name="nombre" id="nombre" autofocus
+                            placeholder="Escribe tu nombre">
+                        <span id="mensaje_nombre" style="color: red;">Ingrese un nombre valido</span>
+                    </div>
+                </div>
+                <div class="formulario_grupo" id="grupo_apellidos">
+                    <label for="apellidos" class="formulario_label">Apellidos: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="text" class="formulario_input" name="apellidos" id="apellidos"
+                            placeholder="Escribe tus apellidos">
+                        <span id="mensaje_apellidos" style="color: red;">Ingrese apellidos valido</span>
+                    </div>
+                </div>
+                <div class="formulario_grupo" id="grupo_usuario">
+                    <label for="usuario" class="formulario_label">Usuario: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="text" class="formulario_input" name="usuario" id="usuario" 
+                            placeholder="Escribe tu usuario" >
+                        <span id="mensaje_usuario" style="color: red;">Ingrese un usuario valido</span>
+                    </div>
+                </div>
+                <div class="formulario_grupo" id="grupo_password">
+                    <label for="password" class="formulario_label">Contraseña: </label>
+                    <div class="formulario_grupo_input">
+                        <input type="password" class="formulario_input" name="password" id="password"
+                            placeholder="Escribe tu contraseña minimo 7 caracteres y maximo 10">
+                        <span id="mensaje_password" style="color: red;">Ingrese una contraseña valido</span>
+                    </div>
+                </div>
+                <div class="formulario_grupo" id="grupo_area">
+                    <label for="area" class="formulario_label">Área:</label>
+                    <select name="area" class="form-select" id="area" required>
+                        <option value="" selected disabled>Elije el área</option>
+                        <option value="Desayuno escolar">Desayunos escolares</option>
+                        <option value="Horta DIF">Huertos</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="imagen-usuario">Foto:</label>
+                    <input type="file" name="imagen-usuario" id="imagen-usuario" class="form-control" required>
+                </div>
+                <div class="formulario_grupo formulario_grupo_btn_enviar">
+                    <button type="submit" class="formulario_btn">Registrar</button>
+                    <a href="javascript:history.go(-1);" class="cancelar">Cancelar</a>  
+                </div>
+            </form>
+        </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="alertaModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content contenedor text-dark">
+                    <div class="modal-header">
+                        <label for="" class="titulos"  style="margin-left: 110px; font-weight: bold;">Datos incompletos o incorrectos</label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="eliminar" style="margin-left: 80px;">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="alertaMensaje">
+                        <!-- Contenido de la alerta -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                        style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                        class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

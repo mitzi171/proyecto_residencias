@@ -1,0 +1,90 @@
+{% extends 'base-consultas.html' %}
+    {% block contenido %}
+        <nav class="navbar navbar-light bg-light" id="menu">
+            <div class="container-fluid">
+                <img src="{{ url_for('static', filename='Logo1.png') }}" class="logo">
+                <!-- <div class="search-bar">
+                    <form class="form-inline d-flex justify-content-center align-items-center">
+                        <input class="form-control" type="text" placeholder="Buscar" aria-label="Search">
+                        <button class="btn btn-outline" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div> -->
+                {% if 'nombre_usuario' in session %}
+                    {% if session['nombre_usuario'] == 'Administrador' %}
+                <div class="otra">
+                    <a href="#" class="link">
+                        <span class="nombre-usuario">{{ session['nombre_usuario'] }}</span>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="submenu" id="submenu">
+                        <a href="{{ url_for('logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar sesión</a>
+                        
+                        <a href="{{ url_for('usuario') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo usuario</a>
+                        <a href="{{ url_for('respaldo_basedatos') }}"><i class="fa fa-database" aria-hidden="true"></i> Respaldo BD</a>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="otra">
+                    <a href="#" class="link-light mx-3">{{ session['nombre_usuario'].split()[0] }} <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <div class="submenu" id="submenu">
+                        <a href="{{ url_for('logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar sesión</a>
+                        <a href="{{ url_for('perfil', origin=request.endpoint) }}"><i class="fa fa-user" aria-hidden="true"></i> Editar perfil</a>
+                    </div>
+                </div>
+        {% endif %}
+        {% else %}
+        <div class="otra">
+            <a href="#" class="link-light mx-3">Zenaida <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <div class="submenu" id="submenu">
+                
+                <a href="{{ url_for('logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar sesión</a>
+                
+            </div>
+           
+        </div>
+    {% endif %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-controls="offcanvasNavbar">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <span class="navbar-toggler-icon"></span>
+                        </div>
+                    </div>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title text-center" id="offcanvasNavbarLabel" style="color:white;"> </h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <h5 class="text-center" >Padrón de beneficiarios</h5>
+                        <h5 class="text-center" >Programas sociales</h5>
+                        <br><br>
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('principal') }}" > <i class="fas fa-home"></i> Inicio </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('frios') }}" > <i class="fas fa-cookie-bite"></i> Desayuno escolar frio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('comunitario') }}"> <i class="fas fa-utensils"></i> Desayuno escolar comunitario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('familiares') }}"><i class="fas fa-seedling"></i> Huertos familiares</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"  href="{{ url_for('escolares') }}"><i class="fas fa-school"></i> Huertos escolares</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"  href="{{ url_for('usuarios') }}"><i class="fas fa-user"></i> Usuarios</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+        </nav>
+        <script src="{{ url_for('static', filename='/js/jquery-latest.js') }}"></script>
+        <script src="{{url_for('static', filename='/js/bootstrap.bundle.js')}}"></script>
+{% endblock %}

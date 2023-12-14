@@ -1,0 +1,178 @@
+{% extends 'base-consultas.html' %}
+{% include 'menu-modulo-consultas.html' %}
+    {% block contenido %}
+        <div class="contenedor">
+            <h3 style="margin-left: 100px;">Control de usuarios</h3>
+            <div class="conta">
+                <div class="row align-items-center">
+                    <div class="col-sm-2">
+                        <label for="perPageSelect" class="regpag" >Registros por página:</label>
+                        <select name="per_page" id="perPageSelect" class="form-select" onchange="updatePerPage(this)">
+                            <option value="5" {% if per_page == 5 %} selected {% endif %}>5</option>
+                            <option value="10" {% if per_page == 10 %} selected {% endif %}>10</option>
+                            <option value="20" {% if per_page == 20 %} selected {% endif %}>20</option>
+                            <!-- Agrega más opciones según sea necesario -->
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="registro">
+                            <a class="registro" style="margin-left: 800px; margin-top: -45px;" href="{{url_for('usuarios_form')}}">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo registro
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="search-bar" style="margin-left: 1350px; margin-top: 10px;">
+                            <form class="form-inline d-flex justify-content-end align-items-center">
+                                <input id="searchInput" class="form-control" type="text" placeholder="Buscar" aria-label="Search" >
+                                <button class="btn btn-outline" type="button" onclick="filterTable()">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <div class="mt-5">
+                <div class="table-responsive">
+                    <table class="table-responsive" id="usuarios">
+                        <thead class="encabezado">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Usuario</th>
+                                <th>Area</th>
+                                <th>Foto</th>
+                                <th colspan="2">Acciones</th>
+                            </tr>
+                            {%for usuario in Usuario %}
+                        </thead>
+                        <tr>
+                            <td>{{usuario.nombre}}</td>
+                            <td>{{usuario.apellidos}}</td>
+                            <td>{{usuario.usuario}}</td>
+                            <td>{{usuario.area}}</td>
+                            <td><img src="{{url_for('static', filename='images/usuarios/' + usuario.foto)}}" alt=""  class="img-fluid rounded" style="width:30px;"></td>
+                            <td>
+                                <div class="botones">
+                                   <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModelDelete{{usuario.id}}"> <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                   <button type="button" data-bs-toggle="modal" data-bs-target="#modalUpdate{{usuario.id}}" class="btn btn-success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="modal fade" id="ModelDelete{{usuario.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content contenedor text-dark">
+                                        
+                                            <label for="" class="titulo">Eliminar usuario</label>
+                                        <div class="modal-body eliminar">¿Estás seguro de eliminar al usuario {{usuario.nombre}}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" style="background: #F80526; color: white; border: 1px #F80526 solid;" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a class="btn btn-danger" style="background: #16B4D2; color: white; border: 1px solid #16B4D2;" href="{{url_for('usuarios_delete', id=usuario.id)}}">Eliminar</a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </td>     
+                            <td>
+                                <!-- Modal de actualización -->
+                                <div class="modal fade" id="modalUpdate{{ usuario.id }}">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content contenedor text-dark">
+                                            <div class="contenedoresss">
+                                                <div class="modal-header">
+                                                    <h5 style="align-items: center; justify-content: center; margin-left: 160px;">Actualizar
+                                                        registro de {{usuario.nombre}}</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{url_for('usuarios_update', id=usuario.id)}}" method="post"
+                                                        enctype="multipart/form-data">
+                                                    <!-- Sección 1: Información de la escuela -->
+                                                    <div>
+                                                        <div class="campo-container">
+                                                        <div class="form-group">
+                                                        <label for="nuevo-nombre-usuario">Nombre</label>
+                                                        <input type="text" name="nuevo-nombre-usuario" id="nuevo-nombre-usuario" class="form-control" value="{{usuario.nombre}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevos-apellidos">Apellidos</label>
+                                                            <input type="text" name="nuevos-apellidos" id="nuevos-apellidos" class="form-control" value="{{usuario.apellidos}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nuevo-usuario">Usuario</label>
+                                                            <input type="text" name="nuevo-usuario" id="nuevo-usuario" class="form-control" value="{{usuario.usuario}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nueva-area">Area</label>
+                                                            <select class="form-control" name="nueva-area">
+                                                                <option>{{usuario.area}}</option>
+                                                                <option value="Desayunos escolares">Desayunos escolares</option>
+                                                                <option value="Horta DIF">Horta DIF</option>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <label for="nueva-imagen-usuario">Foto</label>
+                                                            <input type="file" name="nueva-imagen-usuario" id="nueva-imagen-usuario" class="form-control" >
+                                                            {% if usuario.foto %}
+                                                                <p>Imagen cargada anteriormente: {{ usuario.foto }}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                      
+                                                        <div class="botones-contenedor">
+                                                            <button type="submit" class="btn btn-primary" style="background: #4CAF50; color: white; border: 1px #4CAF50 solid; margin-left: 350px;">Actualizar</button>
+                                                            <button type="button"
+                                                    style="background: #F80526; color: white; border: 1px #F80526 solid;"
+                                                    class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                        
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p style="margin-left: 10px; margin-top: 15px;">Total de Registros: {{ total_registros }}</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="pagination">
+                            <ul class="pagination">
+                                <li class="page-item page-item-custom page-item-previous">
+                                    {% if page > 1 %}
+                                    <a class="page-link" href="{{ url_for('usuarios', page=page-1, per_page=per_page) }}" style="color: grey;">Anterior</a>
+                                    {% endif %}
+                                </li>
+                                <li class="page-item page-item-count">
+                                    <span class="page-link" style="color: grey;">{{ page }} / {{ total_pages }}</span>
+                                </li>
+                                <li class="page-item page-item-custom page-item-next">
+                                    {% if page < total_pages %}
+                                    <a class="page-link" href="{{ url_for('usuarios', page=page+1, per_page=per_page) }}" style="color: grey;">Siguiente</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </a>
+                    <div class="card-footer text-muted text-center">DIF San Felipe del Progreso</div> 
+                    <script>
+                        function cancelarRegistro() {
+                        window.location.href = "{{ url_for('usuarios') }}";
+                        }
+                    </script>
+                    
+    {% endblock %}
